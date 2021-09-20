@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1001</width>
-    <height>768</height>
+    <width>1121</width>
+    <height>866</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -130,17 +130,17 @@
      <rect>
       <x>20</x>
       <y>160</y>
-      <width>961</width>
-      <height>591</height>
+      <width>541</width>
+      <height>691</height>
      </rect>
     </property>
     <widget class="QPushButton" name="boton5">
      <property name="geometry">
       <rect>
-       <x>760</x>
-       <y>490</y>
-       <width>191</width>
-       <height>81</height>
+       <x>20</x>
+       <y>630</y>
+       <width>501</width>
+       <height>41</height>
       </rect>
      </property>
      <property name="font">
@@ -154,9 +154,57 @@
      </property>
     </widget>
    </widget>
+   <widget class="QLabel" name="label_2">
+    <property name="geometry">
+     <rect>
+      <x>580</x>
+      <y>100</y>
+      <width>261</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Bahnschrift Light Condensed</family>
+      <pointsize>16</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>Elegir simulación a ejecutar:</string>
+    </property>
+   </widget>
+   <widget class="QComboBox" name="combo2">
+    <property name="geometry">
+     <rect>
+      <x>850</x>
+      <y>110</y>
+      <width>251</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Bahnschrift Light Condensed</family>
+      <pointsize>14</pointsize>
+     </font>
+    </property>
+   </widget>
+   <widget class="QTableView" name="tableView">
+    <property name="geometry">
+     <rect>
+      <x>570</x>
+      <y>160</y>
+      <width>531</width>
+      <height>681</height>
+     </rect>
+    </property>
+   </widget>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
  </widget>
  <resources/>
  <connections/>
 </ui>
+
+
+
