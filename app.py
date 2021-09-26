@@ -1,14 +1,16 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
-from PyQt5.QtWidgets import QMessageBox,QFileDialog
+from PyQt5.QtCore import Qt
+from PyQt5.QtWidgets import QDialog, QMessageBox,QFileDialog, QTableWidgetItem,QAbstractItemView
 import xml.etree.ElementTree as ET
 from produccion import linea, producto,simulacion,acciones
 from lista import dlinkedlist
+from os import startfile
 
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(1121, 866)
+        MainWindow.resize(1121, 750)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.boton1 = QtWidgets.QPushButton(self.centralwidget)
@@ -44,6 +46,9 @@ class Ui_MainWindow(object):
         font.setPointSize(14)
         self.boton3.setFont(font)
         self.boton3.setObjectName("boton3")
+        self.boton3.setEnabled(False)
+        self.boton3.clicked.connect(self.exportar_xml)
+
         self.boton4 = QtWidgets.QPushButton(self.centralwidget)
         self.boton4.setGeometry(QtCore.QRect(560, 20, 161, 61))
         font = QtGui.QFont()
@@ -51,6 +56,8 @@ class Ui_MainWindow(object):
         font.setPointSize(14)
         self.boton4.setFont(font)
         self.boton4.setObjectName("boton4")
+        self.boton4.clicked.connect(self.soporte)
+
         self.label = QtWidgets.QLabel(self.centralwidget)
         self.label.setGeometry(QtCore.QRect(20, 100, 261, 51))
         font = QtGui.QFont()
@@ -68,25 +75,30 @@ class Ui_MainWindow(object):
         self.combo.activated.connect(self.fabricar_producto)
 
 
-
-
         self.informacion = QtWidgets.QWidget(self.centralwidget)
-        self.informacion.setGeometry(QtCore.QRect(20, 160, 541, 691))
+        self.informacion.setGeometry(QtCore.QRect(20, 165, 541, 691))
         self.informacion.setObjectName("informacion")
         self.boton5 = QtWidgets.QPushButton(self.informacion)
-        self.boton5.setGeometry(QtCore.QRect(20, 630, 501, 41))
+        self.boton5.setGeometry(QtCore.QRect(0, 505, 525, 41))
         font = QtGui.QFont()
         font.setFamily("Bahnschrift Light Condensed")
         font.setPointSize(16)
         self.boton5.setFont(font)
         self.boton5.setObjectName("boton5")
+        self.boton5.setEnabled(False)
+        self.boton5.clicked.connect(self.exportar_html)
+
         self.boton6 = QtWidgets.QPushButton(self.informacion)
-        self.boton6.setGeometry(QtCore.QRect(20, 570, 501, 41))
+        self.boton6.setGeometry(QtCore.QRect(0, 440, 525, 41))
         font = QtGui.QFont()
         font.setFamily("Bahnschrift Light Condensed")
         font.setPointSize(16)
         self.boton6.setFont(font)
         self.boton6.setObjectName("boton6")
+        self.boton6.setEnabled(False)
+        self.boton6.clicked.connect(self.guardar_grafo)
+
+
         self.label_2 = QtWidgets.QLabel(self.centralwidget)
         self.label_2.setGeometry(QtCore.QRect(580, 100, 261, 51))
         font = QtGui.QFont()
@@ -101,9 +113,58 @@ class Ui_MainWindow(object):
         font.setPointSize(14)
         self.combo2.setFont(font)
         self.combo2.setObjectName("combo2")
+        self.combo2.activated.connect(self.exportar_htmlS)
+
+
         self.tableView = QtWidgets.QTableWidget(self.centralwidget)
-        self.tableView.setGeometry(QtCore.QRect(570, 160, 531, 681))
+        self.tableView.setGeometry(QtCore.QRect(570, 160, 531, 550))
         self.tableView.setObjectName("tableView")
+        self.tableView.setEditTriggers(QAbstractItemView.NoEditTriggers)
+        self.tableView.setDragDropOverwriteMode(False)
+        self.tableView.horizontalHeader().setDefaultAlignment(Qt.AlignHCenter|Qt.AlignVCenter|
+                                                          Qt.AlignCenter)
+        self.tableView.horizontalHeader().setStretchLastSection(True)
+        self.tableView.verticalHeader().setVisible(False)
+        self.tableView.setAlternatingRowColors(True)
+        self.tableView.verticalHeader().setDefaultSectionSize(50)
+
+        self.nombre = QtWidgets.QLabel(self.informacion)
+        self.nombre.setGeometry(QtCore.QRect(0, 0, 261, 51))
+        font = QtGui.QFont()
+        font.setFamily("Bahnschrift Light Condensed")
+        font.setPointSize(16)
+        self.nombre.setFont(font)
+        self.nombre.setObjectName("nombre")
+
+        self.nombreP = QtWidgets.QLabel(self.informacion)
+        self.nombreP.setGeometry(QtCore.QRect(0, 50, 500, 51))
+        font = QtGui.QFont()
+        font.setFamily("Bahnschrift Light Condensed")
+        font.setPointSize(16)
+        self.nombreP.setFont(font)
+        self.nombreP.setObjectName("nombreP")
+
+        self.Tiempo = QtWidgets.QLabel(self.informacion)
+        self.Tiempo.setGeometry(QtCore.QRect(0, 100, 500, 51))
+        font = QtGui.QFont()
+        font.setFamily("Bahnschrift Light Condensed")
+        font.setPointSize(16)
+        self.Tiempo.setFont(font)
+        self.Tiempo.setObjectName("tiempo")
+
+        self.Ensamble = QtWidgets.QLabel(self.informacion)
+        self.Ensamble.setGeometry(QtCore.QRect(0, 150, 500, 51))
+        font = QtGui.QFont()
+        font.setFamily("Bahnschrift Light Condensed")
+        font.setPointSize(16)
+        self.Ensamble.setFont(font)
+        self.Ensamble.setObjectName("ensamble")
+
+        self.imagen = QtWidgets.QLabel(self.informacion)
+        self.imagen.setGeometry(QtCore.QRect(0, 200, 541, 200))
+        self.imagen.setObjectName("imagen")
+        
+
         MainWindow.setCentralWidget(self.centralwidget)
         self.statusbar = QtWidgets.QStatusBar(MainWindow)
         self.statusbar.setObjectName("statusbar")
@@ -123,6 +184,8 @@ class Ui_MainWindow(object):
         self.boton5.setText(_translate("MainWindow", "Exportar HTML"))
         self.boton6.setText(_translate("MainWindow", "Guardar grafo"))
         self.label_2.setText(_translate("MainWindow", "Elegir simulación a ejecutar:"))
+        self.nombre.setText(_translate("informacion","Información de Producción:"))
+        
 
     def read_file(self):
         buscar = QFileDialog.getOpenFileName()
@@ -137,6 +200,10 @@ class Ui_MainWindow(object):
         while aux:
             self.combo.addItem(aux.dato.getNombre())
             aux=aux.next
+        msj = QMessageBox()
+        msj.setWindowTitle('Información')
+        msj.setText('Datos cargados correctamente')
+        msj.exec()
 
     def read_fileS(self):
         buscar = QFileDialog.getOpenFileName()
@@ -153,6 +220,11 @@ class Ui_MainWindow(object):
         while aux:
             self.combo2.addItem(aux.dato.getId())
             aux=aux.next
+        
+        msj = QMessageBox()
+        msj.setWindowTitle('Información')
+        msj.setText('Datos cargados correctamente')
+        msj.exec()
 
     def datosM(self,file):
         principal=dlinkedlist()
@@ -244,6 +316,7 @@ class Ui_MainWindow(object):
         while aux:
             if aux.dato.getNombre()==nombre:
                 ensamble=aux.dato.getEnsamblaje()
+                aux.dato.Graphviz()
             aux=aux.next
 
         print('Ensamblar: '+nombre)
@@ -284,7 +357,7 @@ class Ui_MainWindow(object):
                             if com.dato[-1]>com.preview.dato[-1]:
                                 if  pos==ensamble.size:
                                     if t>Taux:
-                                        t+=1
+                                        t+=int(L.dato.getTiempo())
                                         temp.append(acciones(t,'Esperar',''))
 
                                         t+=int(L.dato.getTiempo())
@@ -296,23 +369,23 @@ class Ui_MainWindow(object):
                                     t+=int(L.dato.getTiempo())
                                     temp.append(acciones(t,'Ensamblar',C.dato))
                             elif com.dato[-1]<com.preview.dato and t>Taux:
-                                t+=1
+                                t+=int(L.dato.getTiempo())
                                 temp.append(acciones(t,'Esperar',''))
 
                                 t+=int(L.dato.getTiempo())
                                 temp.append(acciones(t,'Ensamblar',C.dato))
                             else:
                                 if com.dato[-1]<com.preview.dato and pos==ensamble.size:
-                                    t+=1
+                                    t+=int(L.dato.getTiempo())
                                     temp.append(acciones(t,'Esperar',''))
 
                                     t+=int(L.dato.getTiempo())
                                     temp.append(acciones(t,'Ensamblar',C.dato))
                                 else:
-                                    t+=1
+                                    t+=int(L.dato.getTiempo())
                                     temp.append(acciones(t,'Esperar',''))
                                     if t<Taux:
-                                        t+=1
+                                        t+=int(L.dato.getTiempo())
                                         temp.append(acciones(t,'Esperar',''))
 
                                         t+=int(L.dato.getTiempo())
@@ -324,7 +397,7 @@ class Ui_MainWindow(object):
                             t+=int(L.dato.getTiempo())
                             temp.append(acciones(t,'Ensamblar',C.dato))
 
-                            t+=1
+                            t+=int(L.dato.getTiempo())
                             temp.append(acciones(t,'Esperar',''))
                         else:
                             t+=int(L.dato.getTiempo())
@@ -374,7 +447,7 @@ class Ui_MainWindow(object):
                     t=L.dato.getTpro()
                     while i<=count:
                         L.dato.getMoves().append(acciones(t,'Esperar',''))
-                        t+=1
+                        t+=int(L.dato.getTiempo())
                         i+=1
                 elif actual > comparador:
                     count=actual-comparador
@@ -382,7 +455,7 @@ class Ui_MainWindow(object):
                     t=L.dato.getTpro()
                     while i<=count:
                         L.next.dato.getMoves().append(acciones(t,'Esperar',''))
-                        t+=1
+                        t+=int(L.dato.getTiempo())
                         i+=1
 
             L=L.next
@@ -401,22 +474,447 @@ class Ui_MainWindow(object):
             x+=1
 
     def fabricar_producto(self):
-        aux=self.productos.first
+        if self.combo.currentText()!='-':
+            self.boton6.setEnabled(True)
+            self.boton5.setEnabled(True)
+            self.boton3.setEnabled(True)
+            aux=self.productos.first
 
-        while aux:
-            if aux.dato.getNombre()==self.combo.currentText():
-                self.datosM(self.file)
-                self.fabricar(aux.dato.getNombre(),self.maquina,self.productos)
-            aux=aux.next
+            while aux:
+                if aux.dato.getNombre()==self.combo.currentText():
+                    self.datosM(self.file)
+                    self.fabricar(aux.dato.getNombre(),self.maquina,self.productos)
+                aux=aux.next
 
-        self.tableView.setColumnCount(self.maquina.size+1)
-        titulos=["Tiempo"]
+            self.nombreP.setVisible(True)
+            _translate = QtCore.QCoreApplication.translate
+            self.nombreP.setText(_translate("informacion","Nombre del Producto: "+str(self.combo.currentText())))
         
+            self.tableView.setColumnCount(self.maquina.size+1)
+            titulos=["Tiempo"]
+
+            self.imagen.setVisible(True)
+            img=QtGui.QImage(self.combo.currentText()+".png")
+            pixmap=QtGui.QPixmap.fromImage(img).scaled(525,200)
+            self.imagen.setPixmap(pixmap)
+
+            L=self.maquina.first
+            while L:
+                titulos.append('Linea '+L.dato.getId())
+                L=L.next
+            self.tableView.setHorizontalHeaderLabels(titulos)
+            self.tableView.clearContents()
+
+            tiempoA=self.maquina.first.dato.getMoves().last
+            tiempo=tiempoA.dato.getTiempo()
+            self.Tiempo.setVisible(True)
+            self.Tiempo.setText(_translate("informacion","Tiempo total de producción: "+str(tiempo)+" s"))
+            self.Ensamble.setVisible(True)
+            self.Ensamble.setText(_translate("informacion","Linea de Ensamblaje: "))
+
+            L=self.maquina.first
+            T=L.dato.getMoves().size
+            x=1
+            fila=0
+            while x<=T:
+                pro=L.dato.getMoves().first
+                columna=0
+                self.tableView.insertRow(fila)
+                dato=QTableWidgetItem(str(pro.dato.getTiempo())+' s')
+                self.tableView.setItem(fila,columna,dato)
+                columna+=1
+                while L:
+                    pro=L.dato.getMoves().first
+                    celda=pro.dato.getAccion()+' - '+pro.dato.getComponente()
+                    dato=QTableWidgetItem(str(celda))
+                    self.tableView.setItem(fila,columna,dato)
+                    columna+=1
+                    L.dato.getMoves().delete()
+                    L=L.next
+                columna=0
+                fila+=1
+                L=self.maquina.first
+                x+=1
+            
+        else:
+            self.nombreP.setVisible(False)
+            self.tableView.clearContents()
+            self.Tiempo.setVisible(False)
+            self.Ensamble.setVisible(False)
+            self.imagen.setVisible(False)
+            self.boton6.setEnabled(False)
+            self.boton5.setEnabled(False)
+            self.boton3.setEnabled(False)
+
+    def exportar_html(self):
+        if self.combo.currentText()!='-':
+            aux=self.productos.first
+            while aux:
+                if aux.dato.getNombre()==self.combo.currentText():
+                    self.datosM(self.file)
+                    self.fabricar(aux.dato.getNombre(),self.maquina,self.productos)
+                    self.html(aux.dato.getNombre())
+                aux=aux.next
+            msj = QMessageBox()
+            msj.setWindowTitle('Información')
+            msj.setText('Archivo creado correctamente')
+            msj.exec()
+            startfile('Reporte '+self.combo.currentText()+'.html')
+        
+    def html(self,nombre):
+        file=open('Reporte '+nombre+'.html','w')
+        contenido='''<!DOCTYPE html>
+                        <html lang="en">
+                        <head>
+                            <meta charset="UTF-8">
+                            <meta http-equiv="X-UA-Compatible" content="IE=edge">
+                            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                            <link rel="stylesheet" href="style.css">
+                            <title>Reporte</title>
+                        </head>
+                        <body>
+                        <div class="container-table">
+                            <div class="table__title1">
+                                Elaboracion de '''+nombre+''' 
+                            </div>
+                        </div> '''
+
+        contenido+='<div id="main-container">' 
+        contenido+='''<table>
+                    <thead>
+                        <tr>'''
+    
+        contenido+='<th style="border-top-left-radius: 20px;">Tiempo (s)</th>'
+
         L=self.maquina.first
         while L:
-            titulos.append('Linea '+L.dato.getId())
+            if L.dato.getId()==self.maquina.last.dato.getId():
+                contenido+='<th style="border-top-right-radius: 20px;">Linea '+L.dato.getId()+'</th>'
+            else:
+                contenido+='<th>Linea '+L.dato.getId()+'</th>'
             L=L.next
-        self.tableView.setHorizontalHeaderLabels(titulos)
+        contenido+='</tr>'
+        contenido+='</thead>'
+        
+        L=self.maquina.first
+        T=L.dato.getMoves().size
+        x=1  
+        while x<=T:
+            pro=L.dato.getMoves().first
+            contenido+='<tr>'
+            contenido+='<td>'+str(pro.dato.getTiempo())+'</td>'
+            while L:
+                pro=L.dato.getMoves().first
+                contenido+='<td>'+pro.dato.getAccion()+' - '+pro.dato.getComponente()+'</td>'
+
+                L.dato.getMoves().delete()
+                L=L.next
+            contenido+='</tr>'   
+            L=self.maquina.first
+            x+=1
+
+        contenido+='''</table>
+                    </div>
+                    </body>
+                    </html>'''
+
+        file.write(contenido)
+        file.close()
+
+    def guardar_grafo(self):
+        startfile(self.combo.currentText()+'.png')
+
+    def exportar_xml(self):
+        if self.combo.currentText()!='-':
+            aux=self.productos.first
+            while aux:
+                if aux.dato.getNombre()==self.combo.currentText():
+                    self.datosM(self.file)
+                    self.fabricar(aux.dato.getNombre(),self.maquina,self.productos)
+                    self.xml(aux.dato.getNombre())
+                aux=aux.next
+            msj = QMessageBox()
+            msj.setWindowTitle('Información')
+            msj.setText('Archivo creado correctamente')
+            msj.exec()
+            startfile('Salida_'+self.combo.currentText()+'.xml')
+
+    def xml(self,dato):
+        raiz=ET.Element('SalidaSimulacion')
+    
+        listadoP=ET.SubElement(raiz,'ListadoProductos')
+
+        product=ET.SubElement(listadoP,'Producto')
+        nombre=ET.SubElement(product,'Nombre')
+        nombre.text=dato
+
+        L=self.maquina.first
+        P=L.dato.getMoves().last
+        t=P.dato.getTiempo()
+        tiempoTotal=ET.SubElement(product,'TiempoTotal')
+        tiempoTotal.text=str(t)
+
+        Elo=ET.SubElement(product,'ElaboracionOptima')
+        T=L.dato.getMoves().size
+        x=1
+        
+        while x<=T:
+            pro=L.dato.getMoves().first
+            tiempo=ET.SubElement(Elo,'Tiempo',NoSegundos=str(pro.dato.getTiempo()))
+            while L:
+                pro=L.dato.getMoves().first
+                LineaE=ET.SubElement(tiempo,'LineaEnsamblaje',Nolinea=str(L.dato.getId()))
+                LineaE.text=pro.dato.getAccion()+' - '+pro.dato.getComponente()
+                L.dato.getMoves().delete()
+                L=L.next
+            
+            L=self.maquina.first
+            x+=1
+        
+        doc = ET.ElementTree(raiz)
+        guardar='Salida_'+dato+'.xml'
+        try:
+            doc.write(guardar) 
+        except IOError as e:
+            print(e)
+
+    def exportar_htmlS(self):
+        if self.combo2.currentText()!='-':
+            aux=self.simulaciones.first
+            switch=False
+            while aux:
+                if aux.dato.getId()==self.combo2.currentText():
+                    aux2=aux.dato.getProductos().first
+                    while aux2:
+                        self.datosM(self.file)
+                        self.fabricar(aux2.dato,self.maquina,self.productos)
+                        self.htmlS(aux.dato,aux2.dato,'Reporte '+aux.dato.getId()+'.html',switch)
+                        self.datosM(self.file)
+                        self.fabricar(aux2.dato,self.maquina,self.productos)
+                        self.xmlS(aux.dato,aux2.dato,aux.dato.getId()+'.xml',switch)
+                        switch=True
+                        aux2=aux2.next
+                    switch=False
+                aux=aux.next
+
+        msj = QMessageBox()
+        msj.setWindowTitle('Información')
+        msj.setText('Archivo creado correctamente')
+        msj.exec()
+        startfile('Reporte '+self.combo2.currentText()+'.html')
+        startfile(self.combo2.currentText()+'.xml')
+        
+    def htmlS(self,datoS,dato,archivo,switch):
+        if switch:
+            file=open(archivo,'r')
+            contenido=file.read()
+            contenido.replace('</body>','')
+            contenido.replace('</html>','')
+
+            contenido+='''<div class="container-table">
+                            <div class="table__title1">
+                                Elaboracion de '''+dato+''' 
+                            </div>
+                        </div> '''
+            contenido+='<div id="main-container">' 
+            contenido+='''<table>
+                       <thead>
+                        <tr>'''
+    
+            contenido+='<th style="border-top-left-radius: 20px;">Tiempo (s)</th>'
+
+            L=self.maquina.first
+            while L:
+                if L.dato.getId()==self.maquina.last.dato.getId():
+                    contenido+='<th style="border-top-right-radius: 20px;">Linea '+L.dato.getId()+'</th>'
+                else:
+                    contenido+='<th>Linea '+L.dato.getId()+'</th>'
+                L=L.next
+            contenido+='</tr>'
+            contenido+='</thead>'
+        
+            L=self.maquina.first
+            T=L.dato.getMoves().size
+            x=1  
+            while x<=T:
+                pro=L.dato.getMoves().first
+                contenido+='<tr>'
+                contenido+='<td>'+str(pro.dato.getTiempo())+'</td>'
+                while L:
+                    pro=L.dato.getMoves().first
+                    contenido+='<td>'+pro.dato.getAccion()+' - '+pro.dato.getComponente()+'</td>'
+
+                    L.dato.getMoves().delete()
+                    L=L.next
+                contenido+='</tr>'   
+                L=self.maquina.first
+                x+=1
+
+            contenido+='''</table>
+                    </div>
+                    </body>
+                    </html>'''
+            newfile=open(archivo,'w')
+            newfile.write(contenido)
+            file.close()
+            newfile.close()
+
+        else:
+            file=open('Reporte '+datoS.getId()+'.html','w')
+            contenido='''<!DOCTYPE html>
+                        <html lang="en">
+                        <head>
+                            <meta charset="UTF-8">
+                            <meta http-equiv="X-UA-Compatible" content="IE=edge">
+                            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                            <link rel="stylesheet" href="style.css">
+                            <title>Reporte</title>
+                        </head>
+                        <body>
+                        <div class="container-table">
+                            <div class="table__title1">
+                                Reporte de '''+datoS.getId()+''' 
+                            </div>
+                        </div> '''
+            contenido+='''<div class="container-table">
+                            <div class="table__title1">
+                                Elaboracion de '''+dato+''' 
+                            </div>
+                        </div> '''
+            contenido+='<div id="main-container">' 
+            contenido+='''<table>
+                       <thead>
+                        <tr>'''
+    
+            contenido+='<th style="border-top-left-radius: 20px;">Tiempo (s)</th>'
+
+            L=self.maquina.first
+            while L:
+                if L.dato.getId()==self.maquina.last.dato.getId():
+                    contenido+='<th style="border-top-right-radius: 20px;">Linea '+L.dato.getId()+'</th>'
+                else:
+                    contenido+='<th>Linea '+L.dato.getId()+'</th>'
+                L=L.next
+            contenido+='</tr>'
+            contenido+='</thead>'
+        
+            L=self.maquina.first
+            T=L.dato.getMoves().size
+            x=1  
+            while x<=T:
+                pro=L.dato.getMoves().first
+                contenido+='<tr>'
+                contenido+='<td>'+str(pro.dato.getTiempo())+'</td>'
+                while L:
+                    pro=L.dato.getMoves().first
+                    contenido+='<td>'+pro.dato.getAccion()+' - '+pro.dato.getComponente()+'</td>'
+
+                    L.dato.getMoves().delete()
+                    L=L.next
+                contenido+='</tr>'   
+                L=self.maquina.first
+                x+=1
+
+            contenido+='''</table>
+                    </div>
+                    </body>
+                    </html>'''
+
+            file.write(contenido)
+            file.close()
+
+    def xmlS(self,datoS,dato,archivo,switch):
+        if switch:
+            mytree = ET.parse(archivo)
+            myroot = mytree.getroot()
+
+            product=ET.Element('Producto')
+            nombre=ET.SubElement(product,'Nombre')
+            nombre.text=dato
+
+            L=self.maquina.first
+            P=L.dato.getMoves().last
+            t=P.dato.getTiempo()
+            tiempoTotal=ET.SubElement(product,'TiempoTotal')
+            tiempoTotal.text=str(t)
+
+            Elo=ET.SubElement(product,'ElaboracionOptima')
+            T=L.dato.getMoves().size
+            x=1
+        
+            while x<=T:
+                pro=L.dato.getMoves().first
+                tiempo=ET.SubElement(Elo,'Tiempo',NoSegundos=str(pro.dato.getTiempo()))
+                while L:
+                    pro=L.dato.getMoves().first
+                    LineaE=ET.SubElement(tiempo,'LineaEnsamblaje',Nolinea=str(L.dato.getId()))
+                    LineaE.text=pro.dato.getAccion()+' - '+pro.dato.getComponente()
+                    L.dato.getMoves().delete()
+                    L=L.next
+            
+                L=self.maquina.first
+                x+=1
+        
+            myroot.append(product)
+            doc=ET.ElementTree(myroot)
+            guardar=datoS.getId()+'.xml'
+            doc.write(guardar)
+
+        else:
+            raiz=ET.Element('SalidaSimulacion')
+            N=ET.SubElement(raiz,'Nombre')
+            N.text=datoS.getId()
+
+            listadoP=ET.SubElement(raiz,'ListadoProductos')
+
+            product=ET.SubElement(listadoP,'Producto')
+            nombre=ET.SubElement(product,'Nombre')
+            nombre.text=dato
+
+            L=self.maquina.first
+            P=L.dato.getMoves().last
+            t=P.dato.getTiempo()
+            tiempoTotal=ET.SubElement(product,'TiempoTotal')
+            tiempoTotal.text=str(t)
+
+            Elo=ET.SubElement(product,'ElaboracionOptima')
+            T=L.dato.getMoves().size
+            x=1
+        
+            while x<=T:
+                pro=L.dato.getMoves().first
+                tiempo=ET.SubElement(Elo,'Tiempo',NoSegundos=str(pro.dato.getTiempo()))
+                while L:
+                    pro=L.dato.getMoves().first
+                    LineaE=ET.SubElement(tiempo,'LineaEnsamblaje',Nolinea=str(L.dato.getId()))
+                    LineaE.text=pro.dato.getAccion()+' - '+pro.dato.getComponente()
+                    L.dato.getMoves().delete()
+                    L=L.next
+            
+                L=self.maquina.first
+                x+=1
+
+            doc = ET.ElementTree(raiz)
+            guardar=datoS.getId()+'.xml'
+            try:
+                doc.write(guardar) 
+            except IOError as e:
+                print(e)
+
+    def soporte(self):
+        ventana = QDialog()
+        ventana.setWindowTitle("Soporte")
+        ventana.resize(400,500)
+        
+        info = QtWidgets.QLabel(ventana)
+        info.setGeometry(QtCore.QRect(0,0, 400, 500))
+        info.setObjectName("soporte")
+
+        img=QtGui.QImage("soporte.png")
+        pixmap=QtGui.QPixmap.fromImage(img).scaled(400,500)
+        info.setPixmap(pixmap)
+
+        ventana.exec_()
 
 
 if __name__ == "__main__":

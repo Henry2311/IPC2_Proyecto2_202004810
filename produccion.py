@@ -1,4 +1,4 @@
-from os import startfile, system
+from os import system
 class producto:
     def __init__(self,nombre,ensamblaje):
         self.nombre = nombre
@@ -37,7 +37,7 @@ class producto:
         file.write(contenido)
         file.close()
         system('cmd /c "dot.exe -Tpng ' + self.getNombre()+'.dot'+' -o '+self.getNombre()+'.png' + '"')
-        startfile(self.getNombre()+'.png')
+        
 
 
 class linea:

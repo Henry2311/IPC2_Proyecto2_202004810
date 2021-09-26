@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Maquina>
+	<CantidadLineasProduccion>13</CantidadLineasProduccion>
+	<ListadoLineasProduccion>
+		<LineaProduccion>
+			<Numero>1</Numero>
+			<CantidadComponentes>17</CantidadComponentes>
+			<TiempoEnsamblaje>5</TiempoEnsamblaje>
+		</LineaProduccion>
+		<LineaProduccion>
+			<Numero>2</Numero>
+			<CantidadComponentes>24</CantidadComponentes>
+			<TiempoEnsamblaje>1</TiempoEnsamblaje>
+		</LineaProduccion>
+		<LineaProduccion>
+			<Numero>3</Numero>
+			<CantidadComponentes>22</CantidadComponentes>
+			<TiempoEnsamblaje>10</TiempoEnsamblaje>
+		</LineaProduccion>
+		<LineaProduccion>
+			<Numero>4</Numero>
+			<CantidadComponentes>23</CantidadComponentes>
+			<TiempoEnsamblaje>7</TiempoEnsamblaje>
+		</LineaProduccion>
+		<LineaProduccion>
+			<Numero>5</Numero>
+			<CantidadComponentes>10</CantidadComponentes>
+			<TiempoEnsamblaje>6</TiempoEnsamblaje>
+		</LineaProduccion>
+		<LineaProduccion>
+			<Numero>6</Numero>
+			<CantidadComponentes>19</CantidadComponentes>
+			<TiempoEnsamblaje>10</TiempoEnsamblaje>
+		</LineaProduccion>
+		<LineaProduccion>
+			<Numero>7</Numero>
+			<CantidadComponentes>19</CantidadComponentes>
+			<TiempoEnsamblaje>1</TiempoEnsamblaje>
+		</LineaProduccion>
+		<LineaProduccion>
+			<Numero>8</Numero>
+			<CantidadComponentes>13</CantidadComponentes>
+			<TiempoEnsamblaje>8</TiempoEnsamblaje>
+		</LineaProduccion>
+		<LineaProduccion>
+			<Numero>9</Numero>
+			<CantidadComponentes>21</CantidadComponentes>
+			<TiempoEnsamblaje>9</TiempoEnsamblaje>
+		</LineaProduccion>
+		<LineaProduccion>
+			<Numero>10</Numero>
+			<CantidadComponentes>21</CantidadComponentes>
+			<TiempoEnsamblaje>6</TiempoEnsamblaje>
+		</LineaProduccion>
+		<LineaProduccion>
+			<Numero>11</Numero>
+			<CantidadComponentes>25</CantidadComponentes>
+			<TiempoEnsamblaje>7</TiempoEnsamblaje>
+		</LineaProduccion>
+		<LineaProduccion>
+			<Numero>12</Numero>
+			<CantidadComponentes>22</CantidadComponentes>
+			<TiempoEnsamblaje>5</TiempoEnsamblaje>
+		</LineaProduccion>
+		<LineaProduccion>
+			<Numero>13</Numero>
+			<CantidadComponentes>20</CantidadComponentes>
+			<TiempoEnsamblaje>6</TiempoEnsamblaje>
+		</LineaProduccion>
+	</ListadoLineasProduccion>
+	<ListadoProductos>
+		<Producto>
+			<nombre>iWatch</nombre>
+			<elaboracion>L10C9 L1C15 L2C18 L8C2 L12C5 L13C18 L5C6 L10C19 L11C16 L5C7 L13C17 L10C20 L11C20</elaboracion>
+		</Producto>
+		<Producto>
+			<nombre>Banda Galaxy Fit 2</nombre>
+			<elaboracion>L4C23 L12C16 L2C9 L9C15 L3C19 L7C9 L5C1 L11C22 L7C7 L5C10 L13C12 L10C14 L13C7</elaboracion>
+		</Producto>
+		<Producto>
+			<nombre>iPhone 6s</nombre>
+			<elaboracion>L2C9 L7C11 L9C21 L11C24 L10C14 L1C8 L9C13 L12C1 L5C5 L3C13 L12C11 L6C2 L3C6</elaboracion>
+		</Producto>
+		<Producto>
+			<nombre>Galaxy Note</nombre>
+			<elaboracion>L6C7 L10C2 L13C14 L2C6 L6C14 L7C15 L8C2 L12C14 L9C5 L8C6 L7C6 L9C10 L5C2</elaboracion>
+		</Producto>
+		<Producto>
+			<nombre>Max Steel</nombre>
+			<elaboracion>L2C5 L10C6 L6C15 L4C22 L11C3 L5C8 L13C1 L8C9 L5C5 L2C5 L13C14 L12C22 L13C16</elaboracion>
+		</Producto>
+		<Producto>
+			<nombre>Barbie</nombre>
+			<elaboracion>L4C15 L7C16 L13C17 L8C6 L3C13 L5C10 L5C4 L8C8 L3C22 L5C6 L5C5 L7C17 L3C1</elaboracion>
+		</Producto>
+		<Producto>
+			<nombre>Kindle</nombre>
+			<elaboracion>L10C3 L5C9 L11C3 L11C10 L8C5 L7C19 L4C10 L3C10 L4C4 L9C9 L13C20 L5C7 L9C17</elaboracion>
+		</Producto>
+	</ListadoProductos>
+</Maquina>
